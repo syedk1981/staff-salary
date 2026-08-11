@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Staff Salary Manager</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6fa;color:#172033;font-family:Arial,sans-serif}
+header{background:#173b8f;color:#fff;padding:18px 14px;text-align:center}
+header h1{margin:0;font-size:23px}header p{margin:6px 0 0;font-size:12px}
+.wrap{max-width:680px;margin:auto;padding:14px}
+.top{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.big{height:110px;border:0;border-radius:18px;color:white;font-size:18px;font-weight:800;box-shadow:0 4px 12px #0002}
+.add{background:#16a34a}.list{background:#2563eb}
+.card{background:white;border-radius:17px;padding:16px;margin-top:14px;box-shadow:0 2px 10px #00000012}
+h2{font-size:18px;margin:0 0 13px}
+label{font-size:13px;font-weight:bold;color:#5b6677;display:block;margin:10px 0 5px}
+input,select{width:100%;padding:13px;border:1px solid #d4dbe6;border-radius:11px;background:#fff;font-size:16px}
+.btn{border:0;border-radius:11px;padding:13px 14px;font-weight:800;font-size:15px}
+.blue{background:#2563eb;color:#fff}.green{background:#16a34a;color:#fff}.purple{background:#7c3aed;color:#fff}
+.orange{background:#ea580c;color:#fff}.teal{background:#0891b2;color:#fff}.gray{background:#475569;color:#fff}
+.red{background:#dc2626;color:#fff}.full{width:100%;margin-top:12px}
+.emp{display:block;width:100%;text-align:left;border:0;border-radius:15px;padding:16px;margin:10px 0;color:#fff;box-shadow:0 3px 9px #0002}
+.emp:nth-child(3n+1){background:#2563eb}.emp:nth-child(3n+2){background:#7c3aed}.emp:nth-child(3n){background:#0891b2}
+.emp .n{font-size:18px;font-weight:800}.emp .s{font-size:12px;opacity:.9;margin-top:4px}.emp .b{font-size:20px;font-weight:800;margin-top:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat div{background:#f1f5f9;border-radius:11px;padding:10px;text-align:center;font-size:12px}.stat b{display:block;font-size:18px;margin-top:4px}
+.tx{padding:12px 0;border-bottom:1px dashed #d9dee7}.tx:last-child{border-bottom:0}.tx strong{font-size:14px}.muted{font-size:12px;color:#667085;margin-top:4px}
+.balance{background:#ecfdf3;border:1px solid #bbf7d0;border-radius:14px;padding:14px;margin-top:12px}.balance small{color:#166534}.balance b{display:block;color:#15803d;font-size:28px;margin-top:3px}
+.hidden{display:none}.empty{text-align:center;color:#7a8494;padding:24px}
+.back{margin-top:14px}
+</style>
+</head>
+<body>
+<header><h1>💼 Staff Salary Manager</h1><p>Salary • Leave • Payments • Balance</p></header>
+
+<div class="wrap">
+<section id="home">
+<div class="top">
+<button class="big add" onclick="showAdd()">➕<br>Add Employee</button>
+<button class="big list" onclick="showEmployees()">👥<br>Employees</button>
+</div>
+<div class="card">
+<h2>Employees</h2>
+<div id="homeEmployees"></div>
+</div>
+</section>
+
+<section id="employees" class="hidden">
+<div class="card"><h2>👥 All Employees</h2><div id="employeeList"></div></div>
+<button class="btn blue full" onclick="goHome()">← Home</button>
+</section>
+
+<section id="employeePage" class="hidden">
+<div class="card" id="employeeDetails"></div>
+<button class="btn blue full" onclick="showEmployees()">← Employees</button>
+</section>
+</div>
+
+<script>
+const KEY="staff_salary_manager_fixed_v1";
+let employees=JSON.parse(localStorage.getItem(KEY)||"[]");
+let currentId=null;
+
+function save(){localStorage.setItem(KEY,JSON.stringify(employees))}
+function money(v){return "₹"+Number(v||0).toLocaleString("en-IN",{maximumFractionDigits:2})}
+function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function get(id){return employees.find(e=>e.id===id)}
+function today(){return new Date().toISOString().slice(0,10)}
+
+function show(id){["home","employees","employeePage"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden")}
+function goHome(){show("home");render()}
+function showEmployees(){show("employees");render()}
+function showAdd(){
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card">
+ <h2>➕ Add Employee</h2>
+ <label>Employee Name</label><input id="ename" placeholder="Enter employee name">
+ <label>Monthly Salary (₹)</label><input id="esalary" type="number" min="0" placeholder="Example: 10000">
+ <label>Free Leave Days Per Month</label><input id="efree" type="number" min="0" step="0.5" value="0">
+ <button class="btn green full" onclick="createEmployee()">Save Employee</button>
+ </div>
+ <button class="btn blue full" onclick="goHome()">← Cancel</button>`;
+ show("employeePage")
+}
+function createEmployee(){
+ const name=document.getElementById("ename").value.trim();
+ const salary=Number(document.getElementById("esalary").value);
+ const free=Number(document.getElementById("efree").value)||0;
+ if(!name||salary<=0){alert("Please enter a valid name and monthly salary.");return}
+ employees.push({id:Date.now(),name,salary,freeLeave:free,leaves:[],payments:[]});
+ save();showEmployees();
+}
+
+function calc(e){
+ const leaveCount=e.leaves.length;
+ const paid=Math.max(0,leaveCount-e.freeLeave);
+ const leaveDed=paid*(e.salary/30);
+ const paidOut=e.payments.reduce((s,p)=>s+Number(p.amount),0);
+ return {leaveCount,paid,leaveDed,paidOut,balance:Math.max(0,e.salary-leaveDed-paidOut)};
+}
+function empButton(e){
+ const c=calc(e);
+ return `<button class="emp" onclick="openEmployee(${e.id})">
+ <div class="n">👤 ${esc(e.name)}</div>
+ <div class="s">Salary ${money(e.salary)} • Free Leave ${e.freeLeave} days</div>
+ <div class="b">Balance: ${money(c.balance)}</div>
+ </button>`;
+}
+function render(){
+ document.getElementById("homeEmployees").innerHTML=employees.length?employees.map(empButton).join(""):'<div class="empty">No employees yet.<br>Tap “Add Employee”.</div>';
+ document.getElementById("employeeList").innerHTML=employees.length?employees.map(empButton).join(""):'<div class="empty">No employees yet.</div>';
+}
+
+function openEmployee(id){
+ currentId=id;const e=get(id);if(!e)return;
+ drawEmployee(e);show("employeePage");
+}
+function drawEmployee(e){
+ const c=calc(e);
+ const tx=[];
+ e.leaves.forEach((d,i)=>tx.push({sort:d,date:d,title:"📅 Leave",detail:i<e.freeLeave?"Free leave":"Paid leave",amount:0}));
+ e.payments.forEach(p=>tx.push({sort:p.date,date:p.date,title:"💳 "+p.method,detail:"Amount paid"+(p.note?" • "+p.note:""),amount:p.amount}));
+ tx.sort((a,b)=>b.sort.localeCompare(a.sort));
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card">
+ <h2>👤 ${esc(e.name)}</h2>
+ <div class="stat">
+ <div>Monthly Salary<b>${money(e.salary)}</b></div>
+ <div>Free Leave<b>${e.freeLeave} days</b></div>
+ <div>Leave Taken<b>${c.leaveCount} days</b></div>
+ <div>Paid Leave<b>${c.paid} days</b></div>
+ </div>
+ <div class="balance"><small>REMAINING BALANCE</small><b>${money(c.balance)}</b></div>
+ </div>
+
+ <div class="card">
+ <h2>Actions</h2>
+ <div class="actions">
+ <button class="btn purple" onclick="leaveForm()">📅<br>Add Leave Date</button>
+ <button class="btn orange" onclick="paymentForm()">💰<br>Add Amount</button>
+ </div>
+ </div>
+
+ <div class="card">
+ <h2>Transactions</h2>
+ ${tx.length?tx.map(t=>`<div class="tx"><strong>${t.title}</strong><div class="muted">Date: ${t.date}${t.detail?" • "+t.detail:""}${t.amount? " • "+money(t.amount):""}</div></div>`).join(""):'<div class="empty">No transactions yet.</div>'}
+ </div>
+
+ <div class="card">
+ <h2>Employee Settings</h2>
+ <label>Monthly Salary (₹)</label><input id="editSalary" type="number" value="${e.salary}">
+ <label>Free Leave Days Per Month</label><input id="editFree" type="number" min="0" step="0.5" value="${e.freeLeave}">
+ <button class="btn green full" onclick="updateEmployee()">Update</button>
+ <button class="btn red full" onclick="removeEmployee()">Delete Employee</button>
+ </div>
+ <button class="btn blue full" onclick="showEmployees()">← Employees</button>`;
+}
+
+function leaveForm(){
+ const e=get(currentId);
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card">
+ <h2>📅 Add Leave Date</h2>
+ <label>Select Leave Date</label>
+ <input id="leaveDate" type="date" value="${today()}">
+ <button class="btn purple full" onclick="saveLeave()">Save Leave</button>
+ <p class="muted">Free leave available: ${e.freeLeave} days per month.</p>
+ </div>
+ <button class="btn blue full" onclick="openEmployee(${e.id})">← Back</button>`;
+}
+function saveLeave(){
+ const e=get(currentId),date=document.getElementById("leaveDate").value;
+ if(!date){alert("Please select a leave date.");return}
+ if(e.leaves.includes(date)){alert("This leave date is already added.");return}
+ e.leaves.push(date);save();openEmployee(e.id);
+}
+function paymentForm(){
+ const e=get(currentId);
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card">
+ <h2>💰 Add Amount Taken</h2>
+ <label>Amount (₹)</label><input id="amount" type="number" min="0" step="0.01" placeholder="Enter amount">
+ <label>Payment Method</label>
+ <select id="method" onchange="toggleNote()"><option>Cash</option><option>UPI</option><option>Other</option></select>
+ <div id="noteBox" class="hidden">
+ <label>Other Description / Note</label>
+ <input id="paymentNote" placeholder="Example: Travel expenses">
+ </div>
+ <label>Date</label><input id="payDate" type="date" value="${today()}">
+ <button class="btn orange full" onclick="savePayment()">Save Amount</button>
+ </div>
+ <button class="btn blue full" onclick="openEmployee(${e.id})">← Back</button>`;
+}
+function toggleNote(){
+ const method=document.getElementById("method").value;
+ const box=document.getElementById("noteBox");
+ if(box) box.classList.toggle("hidden",method!=="Other");
+}
+function savePayment(){
+ const e=get(currentId),amount=Number(document.getElementById("amount").value),method=document.getElementById("method").value,date=document.getElementById("payDate").value;
+ const note=method==="Other"?(document.getElementById("paymentNote").value.trim()):"";
+ if(amount<=0||!date){alert("Please enter amount and date.");return}
+ if(method==="Other"&&!note){alert("Please enter a description for Other.");return}
+ e.payments.push({amount,method,date,note});save();openEmployee(e.id);
+}
+function updateEmployee(){
+ const e=get(currentId),salary=Number(document.getElementById("editSalary").value),free=Number(document.getElementById("editFree").value)||0;
+ if(salary<=0){alert("Enter a valid salary.");return}
+ e.salary=salary;e.freeLeave=free;save();openEmployee(e.id);
+}
+function removeEmployee(){
+ const e=get(currentId);
+ if(confirm("Delete "+e.name+" and all records?")){employees=employees.filter(x=>x.id!==e.id);save();showEmployees()}
+}
+render();
+</script>
+</body>
+</html>
