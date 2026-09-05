@@ -1,181 +1,251 @@
-From: <Saved by Blink>
-Snapshot-Content-Location: https://syedk1981.github.io/staff-salary/?utm_source=chatgpt.com
-Subject: Staff Salary Manager
-Date: Sat, 5 Sep 2026 20:55:59 +0530
-MIME-Version: 1.0
-Content-Type: multipart/related;
-	type="text/html";
-	boundary="----MultipartBoundary--BJQvSZD02ucGZYD54QgyfqCCZskhGXbZf5MbTKTIrr----"
-
-
-------MultipartBoundary--BJQvSZD02ucGZYD54QgyfqCCZskhGXbZf5MbTKTIrr----
-Content-Type: text/html
-Content-ID: <frame-A39ED1E9BD318BBC53BC52F31F6F4620@mhtml.blink>
-Content-Transfer-Encoding: binary
-Content-Location: https://syedk1981.github.io/staff-salary/?utm_source=chatgpt.com
-
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="cid:css-a63db5f1-775c-409a-af5c-03b62aa33c74@mhtml.blink" />
-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Staff Salary Manager</title>
-
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6fa;color:#172033;font-family:Arial,sans-serif}
+header{background:#173b8f;color:#fff;padding:18px 14px;text-align:center}
+header h1{margin:0;font-size:23px}header p{margin:6px 0 0;font-size:12px}
+.wrap{max-width:680px;margin:auto;padding:14px}
+.top{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.big{height:110px;border:0;border-radius:18px;color:white;font-size:18px;font-weight:800;box-shadow:0 4px 12px #0002}
+.add{background:#16a34a}.list{background:#2563eb}
+.card{background:white;border-radius:17px;padding:16px;margin-top:14px;box-shadow:0 2px 10px #00000012}
+h2{font-size:18px;margin:0 0 13px}
+label{font-size:13px;font-weight:bold;color:#5b6677;display:block;margin:10px 0 5px}
+input,select{width:100%;padding:13px;border:1px solid #d4dbe6;border-radius:11px;background:#fff;font-size:16px}
+.btn{border:0;border-radius:11px;padding:13px 14px;font-weight:800;font-size:15px}
+.blue{background:#2563eb;color:#fff}.green{background:#16a34a;color:#fff}.purple{background:#7c3aed;color:#fff}
+.orange{background:#ea580c;color:#fff}.teal{background:#0891b2;color:#fff}.gray{background:#475569;color:#fff}
+.red{background:#dc2626;color:#fff}.full{width:100%;margin-top:12px}
+.emp{display:block;width:100%;text-align:left;border:0;border-radius:15px;padding:16px;margin:10px 0;color:#fff;box-shadow:0 3px 9px #0002}
+.emp:nth-child(3n+1){background:#2563eb}.emp:nth-child(3n+2){background:#7c3aed}.emp:nth-child(3n){background:#0891b2}
+.emp .n{font-size:18px;font-weight:800}.emp .s{font-size:12px;opacity:.9;margin-top:4px}.emp .b{font-size:20px;font-weight:800;margin-top:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat div{background:#f1f5f9;border-radius:11px;padding:10px;text-align:center;font-size:12px}.stat b{display:block;font-size:18px;margin-top:4px}
+.tx{padding:12px 0;border-bottom:1px dashed #d9dee7}.tx:last-child{border-bottom:0}.tx strong{font-size:14px}.muted{font-size:12px;color:#667085;margin-top:4px}
+.balance{background:#ecfdf3;border:1px solid #bbf7d0;border-radius:14px;padding:14px;margin-top:12px}.balance small{color:#166534}.balance b{display:block;color:#15803d;font-size:28px;margin-top:3px}
+.hidden{display:none}.empty{text-align:center;color:#7a8494;padding:24px}
+.back{margin-top:14px}
+</style>
 </head>
 <body>
 <header><h1>💼 Staff Salary Manager</h1><p>Salary • Leave • Payments • Balance</p></header>
 
+<div class="card" style="margin-bottom:14px"><h2>💾 Data Safety</h2><div class="top"><button class="btn green full" onclick="backupData()">💾 Backup Data</button><button class="btn blue full" onclick="document.getElementById('restoreFile').click()">📥 Restore Data</button></div><input id="restoreFile" type="file" accept=".json,application/json" class="hidden" onchange="restoreData(this)"><button class="btn danger full" style="margin-top:10px" onclick="clearAllData()">🗑️ Clear All Data</button><div class="muted" style="margin-top:8px">Backup creates a JSON file. Keep it safely in Downloads or Google Drive.</div></div>
+
 <div class="wrap">
 <section id="home">
 <div class="top">
-<button class="big add">➕<br>Add Employee</button>
-<button class="big list">👥<br>Employees</button>
+<button class="big add" onclick="showAdd()">➕<br>Add Employee</button>
+<button class="big list" onclick="showEmployees()">👥<br>Employees</button>
 </div>
 <div class="card">
 <h2>Employees</h2>
-<div id="homeEmployees"><button class="emp">
- <div class="n">👤 Siva</div>
- <div class="s">Salary ₹11,000 • Free Leave 3 days</div>
- <div class="b">Balance: ₹5,267</div>
- </button><button class="emp">
- <div class="n">👤 Keerthana</div>
- <div class="s">Salary ₹10,000 • Free Leave 0 days</div>
- <div class="b">Balance: ₹9,100</div>
- </button><button class="emp">
- <div class="n">👤 Javeed</div>
- <div class="s">Salary ₹8,000 • Free Leave 2 days</div>
- <div class="b">Balance: ₹6,000</div>
- </button><button class="emp">
- <div class="n">👤 Riyaz</div>
- <div class="s">Salary ₹8,000 • Free Leave 0 days</div>
- <div class="b">Balance: ₹8,000</div>
- </button></div>
+<div id="homeEmployees"></div>
 </div>
 </section>
 
 <section id="employees" class="hidden">
-<div class="card"><h2>👥 All Employees</h2><div id="employeeList"><button class="emp">
- <div class="n">👤 Siva</div>
- <div class="s">Salary ₹11,000 • Free Leave 3 days</div>
- <div class="b">Balance: ₹5,267</div>
- </button><button class="emp">
- <div class="n">👤 Keerthana</div>
- <div class="s">Salary ₹10,000 • Free Leave 0 days</div>
- <div class="b">Balance: ₹9,100</div>
- </button><button class="emp">
- <div class="n">👤 Javeed</div>
- <div class="s">Salary ₹8,000 • Free Leave 2 days</div>
- <div class="b">Balance: ₹6,000</div>
- </button><button class="emp">
- <div class="n">👤 Riyaz</div>
- <div class="s">Salary ₹8,000 • Free Leave 0 days</div>
- <div class="b">Balance: ₹8,000</div>
- </button></div></div>
-<button class="btn blue full">← Home</button>
+<div class="card"><h2>👥 All Employees</h2><div id="employeeList"></div></div>
+<button class="btn blue full" onclick="goHome()">← Home</button>
 </section>
 
 <section id="employeePage" class="hidden">
 <div class="card" id="employeeDetails"></div>
-<button class="btn blue full">← Employees</button>
+<button class="btn blue full" onclick="showEmployees()">← Employees</button>
 </section>
 </div>
 
+<script>
+const KEY="staff_salary_manager_fixed_v1";
+let employees=JSON.parse(localStorage.getItem(KEY)||"[]");
+let currentId=null;
 
+function save(){localStorage.setItem(KEY,JSON.stringify(employees))}
+function money(v){return "₹"+Number(v||0).toLocaleString("en-IN",{maximumFractionDigits:2})}
+function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function get(id){return employees.find(e=>e.id===id)}
+function today(){return new Date().toISOString().slice(0,10)}
 
+function show(id){["home","employees","employeePage"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden")}
+function goHome(){show("home");render()}
+function showEmployees(){show("employees");render()}
+function showAdd(){
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card">
+ <h2>➕ Add Employee</h2>
+ <label>Employee Name</label><input id="ename" placeholder="Enter employee name">
+ <label>Monthly Salary (₹)</label><input id="esalary" type="number" min="0" placeholder="Example: 10000">
+ <label>Free Leave Days Per Month</label><input id="efree" type="number" min="0" step="0.5" value="0">
+ <button class="btn green full" onclick="createEmployee()">Save Employee</button>
+ </div>
+ <button class="btn blue full" onclick="goHome()">← Cancel</button>`;
+ show("employeePage")
+}
+function createEmployee(){
+ const name=document.getElementById("ename").value.trim();
+ const salary=Number(document.getElementById("esalary").value);
+ const free=Number(document.getElementById("efree").value)||0;
+ if(!name||salary<=0){alert("Please enter a valid name and monthly salary.");return}
+ employees.push({id:Date.now(),name,salary,freeLeave:free,leaves:[],payments:[]});
+ save();showEmployees();
+}
 
-</body></html>
-------MultipartBoundary--BJQvSZD02ucGZYD54QgyfqCCZskhGXbZf5MbTKTIrr----
-Content-Type: text/css
-Content-Transfer-Encoding: binary
-Content-Location: cid:css-a63db5f1-775c-409a-af5c-03b62aa33c74@mhtml.blink
+function currentMonth(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
+function monthOf(d){return String(d).slice(0,7)}
+function monthLabel(m){const [y,mo]=m.split("-");return new Date(+y,+mo-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"})}
+function calc(e,month=currentMonth()){
+ const leaves=e.leaves.filter(d=>monthOf(d)===month);
+ const payments=e.payments.filter(x=>monthOf(x.date)===month);
+ const paid=Math.max(0,leaves.length-e.freeLeave);
+ const leaveDed=paid*(e.salary/30);
+ const paidOut=payments.reduce((s,x)=>s+Number(x.amount),0);
+ return {leaveCount:leaves.length,paid,leaveDed,paidOut,balance:Math.max(0,e.salary-leaveDed-paidOut)};
+}
+function empButton(e){
+ const c=calc(e);
+ return `<button class="emp" onclick="openEmployee(${e.id})">
+ <div class="n">👤 ${esc(e.name)}</div>
+ <div class="s">Salary ${money(e.salary)} • Free Leave ${e.freeLeave} days</div>
+ <div class="b">Balance: ${money(c.balance)}</div>
+ </button>`;
+}
+function render(){
+ document.getElementById("homeEmployees").innerHTML=employees.length?employees.map(empButton).join(""):'<div class="empty">No employees yet.<br>Tap “Add Employee”.</div>';
+ document.getElementById("employeeList").innerHTML=employees.length?employees.map(empButton).join(""):'<div class="empty">No employees yet.</div>';
+}
 
-@charset "utf-8";
+function openEmployee(id){
+ currentId=id;const e=get(id);if(!e)return;
+ drawEmployee(e);show("employeePage");
+}
+function drawEmployee(e,month=currentMonth()){
+ const c=calc(e,month),tx=[];
+ e.leaves.filter(d=>monthOf(d)===month).forEach(d=>tx.push({sort:d,type:"leave",value:d,date:d,title:"📅 Leave",detail:e.leaves.indexOf(d)<e.freeLeave?"Free leave":"Paid leave"}));
+ e.payments.forEach((p,i)=>{if(monthOf(p.date)===month)tx.push({sort:p.date,type:"payment",value:i,date:p.date,title:"💳 "+p.method,detail:"Amount paid"+(p.note?" • "+p.note:""),amount:p.amount})});
+ tx.sort((a,b)=>b.sort.localeCompare(a.sort));
+ const months=[currentMonth(),...e.leaves.map(monthOf),...e.payments.map(x=>monthOf(x.date))].filter((v,i,a)=>a.indexOf(v)===i).sort().reverse();
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card"><h2>👤 ${esc(e.name)}</h2>
+ <label>Salary Month</label><select id="monthSelect" onchange="changeMonth()">${months.map(m=>`<option value="${m}" ${m===month?"selected":""}>${monthLabel(m)}</option>`).join("")}</select>
+ <div class="stat"><div>Monthly Salary<b>${money(e.salary)}</b></div><div>Free Leave<b>${e.freeLeave} days</b></div><div>Leave Taken<b>${c.leaveCount} days</b></div><div>Paid Leave<b>${c.paid} days</b></div></div>
+ <div class="balance"><small>REMAINING BALANCE — ${monthLabel(month)}</small><b>${money(c.balance)}</b></div></div>
+ <div class="card"><h2>Actions</h2><div class="actions"><button class="btn purple" onclick="leaveForm()">📅<br>Add Leave Date</button><button class="btn orange" onclick="paymentForm()">💰<br>Add Amount</button></div></div>
+ <div class="card"><h2>📋 ${monthLabel(month)} Transactions</h2>${tx.length?tx.map(t=>`<div class="tx"><strong>${t.title}</strong><div class="muted">Date: ${t.date}${t.detail?" • "+esc(t.detail):""}${t.amount?" • "+money(t.amount):""}</div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn blue" style="padding:8px 10px" onclick='editTransaction(${e.id},${JSON.stringify(t.type)},${JSON.stringify(t.value)})'>✏️ Edit</button><button class="btn red" style="padding:8px 10px" onclick='deleteTransaction(${e.id},${JSON.stringify(t.type)},${JSON.stringify(t.value)})'>🗑️ Delete</button></div></div>`).join(""):'<div class="empty">No transactions for this month.</div>'}</div>
+ <div class="card"><h2>Employee Settings</h2><label>Monthly Salary (₹)</label><input id="editSalary" type="number" value="${e.salary}"><label>Free Leave Days Per Month</label><input id="editFree" type="number" min="0" step=".5" value="${e.freeLeave}"><button class="btn green full" onclick="updateEmployee()">Update</button><button class="btn red full" onclick="removeEmployee()">Delete Employee</button></div>
+ <button class="btn blue full" onclick="showEmployees()">← Employees</button>`;
+}
+function changeMonth(){drawEmployee(get(currentId),document.getElementById("monthSelect").value)}
 
-* { box-sizing: border-box; }
+function editTransaction(id,type,value){
+ const e=get(id);
+ if(type==="leave"){
+  document.getElementById("employeePage").innerHTML=`<div class="card"><h2>✏️ Edit Leave</h2><label>Leave Date</label><input id="editLeaveDate" type="date" value="${value}"><button class="btn purple full" onclick='saveEditLeave(${id},${JSON.stringify(value)})'>Save</button></div><button class="btn blue full" onclick="openEmployee(${id})">← Back</button>`;
+ }else{
+  const i=Number(value),p=e.payments[i];
+  document.getElementById("employeePage").innerHTML=`<div class="card"><h2>✏️ Edit Amount</h2><label>Amount (₹)</label><input id="editAmount" type="number" min="0" step=".01" value="${p.amount}"><label>Payment Method</label><select id="editMethod" onchange="toggleEditNote()"><option ${p.method==="Cash"?"selected":""}>Cash</option><option ${p.method==="UPI"?"selected":""}>UPI</option><option ${p.method==="Other"?"selected":""}>Other</option></select><div id="editNoteBox" class="${p.method==="Other"?"":"hidden"}"><label>Other Description / Note</label><input id="editNote" value="${esc(p.note||"")}"></div><label>Date</label><input id="editPayDate" type="date" value="${p.date}"><button class="btn orange full" onclick="saveEditPayment(${id},${i})">Save</button></div><button class="btn blue full" onclick="openEmployee(${id})">← Back</button>`;
+ }
+}
+function toggleEditNote(){document.getElementById("editNoteBox").classList.toggle("hidden",document.getElementById("editMethod").value!=="Other")}
+function saveEditLeave(id,oldDate){const e=get(id),d=document.getElementById("editLeaveDate").value;if(!d){alert("Select a date.");return}if(d!==oldDate&&e.leaves.includes(d)){alert("This leave date is already added.");return}const i=e.leaves.indexOf(oldDate);if(i>=0)e.leaves[i]=d;save();openEmployee(id)}
+function saveEditPayment(id,i){const e=get(id),amount=Number(document.getElementById("editAmount").value),method=document.getElementById("editMethod").value,date=document.getElementById("editPayDate").value,note=method==="Other"?document.getElementById("editNote").value.trim():"";if(amount<=0||!date){alert("Enter amount and date.");return}if(method==="Other"&&!note){alert("Enter Other description.");return}e.payments[i]={amount,method,date,note};save();openEmployee(id)}
+function deleteTransaction(id,type,value){const e=get(id);if(!confirm("Delete this entry?"))return;if(type==="leave"){const i=e.leaves.indexOf(value);if(i>=0)e.leaves.splice(i,1)}else e.payments.splice(Number(value),1);save();openEmployee(id)}
 
-body { margin: 0px; background: rgb(244, 246, 250); color: rgb(23, 32, 51); font-family: Arial, sans-serif; }
-
-header { background: rgb(23, 59, 143); color: rgb(255, 255, 255); padding: 18px 14px; text-align: center; }
-
-header h1 { margin: 0px; font-size: 23px; }
-
-header p { margin: 6px 0px 0px; font-size: 12px; }
-
-.wrap { max-width: 680px; margin: auto; padding: 14px; }
-
-.top { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-.big { height: 110px; border: 0px; border-radius: 18px; color: white; font-size: 18px; font-weight: 800; box-shadow: rgba(0, 0, 0, 0.133) 0px 4px 12px; }
-
-.add { background: rgb(22, 163, 74); }
-
-.list { background: rgb(37, 99, 235); }
-
-.card { background: white; border-radius: 17px; padding: 16px; margin-top: 14px; box-shadow: rgba(0, 0, 0, 0.07) 0px 2px 10px; }
-
-h2 { font-size: 18px; margin: 0px 0px 13px; }
-
-label { font-size: 13px; font-weight: bold; color: rgb(91, 102, 119); display: block; margin: 10px 0px 5px; }
-
-input, select { width: 100%; padding: 13px; border: 1px solid rgb(212, 219, 230); border-radius: 11px; background: rgb(255, 255, 255); font-size: 16px; }
-
-.btn { border: 0px; border-radius: 11px; padding: 13px 14px; font-weight: 800; font-size: 15px; }
-
-.blue { background: rgb(37, 99, 235); color: rgb(255, 255, 255); }
-
-.green { background: rgb(22, 163, 74); color: rgb(255, 255, 255); }
-
-.purple { background: rgb(124, 58, 237); color: rgb(255, 255, 255); }
-
-.orange { background: rgb(234, 88, 12); color: rgb(255, 255, 255); }
-
-.teal { background: rgb(8, 145, 178); color: rgb(255, 255, 255); }
-
-.gray { background: rgb(71, 85, 105); color: rgb(255, 255, 255); }
-
-.red { background: rgb(220, 38, 38); color: rgb(255, 255, 255); }
-
-.full { width: 100%; margin-top: 12px; }
-
-.emp { display: block; width: 100%; text-align: left; border: 0px; border-radius: 15px; padding: 16px; margin: 10px 0px; color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.133) 0px 3px 9px; }
-
-.emp:nth-child(3n+1) { background: rgb(37, 99, 235); }
-
-.emp:nth-child(3n+2) { background: rgb(124, 58, 237); }
-
-.emp:nth-child(3n) { background: rgb(8, 145, 178); }
-
-.emp .n { font-size: 18px; font-weight: 800; }
-
-.emp .s { font-size: 12px; opacity: 0.9; margin-top: 4px; }
-
-.emp .b { font-size: 20px; font-weight: 800; margin-top: 8px; }
-
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
-
-.stat { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-.stat div { background: rgb(241, 245, 249); border-radius: 11px; padding: 10px; text-align: center; font-size: 12px; }
-
-.stat b { display: block; font-size: 18px; margin-top: 4px; }
-
-.tx { padding: 12px 0px; border-bottom: 1px dashed rgb(217, 222, 231); }
-
-.tx:last-child { border-bottom: 0px; }
-
-.tx strong { font-size: 14px; }
-
-.muted { font-size: 12px; color: rgb(102, 112, 133); margin-top: 4px; }
-
-.balance { background: rgb(236, 253, 243); border: 1px solid rgb(187, 247, 208); border-radius: 14px; padding: 14px; margin-top: 12px; }
-
-.balance small { color: rgb(22, 101, 52); }
-
-.balance b { display: block; color: rgb(21, 128, 61); font-size: 28px; margin-top: 3px; }
-
-.hidden { display: none; }
-
-.empty { text-align: center; color: rgb(122, 132, 148); padding: 24px; }
-
-.back { margin-top: 14px; }
-------MultipartBoundary--BJQvSZD02ucGZYD54QgyfqCCZskhGXbZf5MbTKTIrr------
+function leaveForm(){
+ const e=get(currentId);
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card">
+ <h2>📅 Add Leave Date</h2>
+ <label>Select Leave Date</label>
+ <input id="leaveDate" type="date" value="${today()}">
+ <button class="btn purple full" onclick="saveLeave()">Save Leave</button>
+ <p class="muted">Free leave available: ${e.freeLeave} days per month.</p>
+ </div>
+ <button class="btn blue full" onclick="openEmployee(${e.id})">← Back</button>`;
+}
+function saveLeave(){
+ const e=get(currentId),date=document.getElementById("leaveDate").value;
+ if(!date){alert("Please select a leave date.");return}
+ if(e.leaves.includes(date)){alert("This leave date is already added.");return}
+ e.leaves.push(date);save();openEmployee(e.id);
+}
+function paymentForm(){
+ const e=get(currentId);
+ document.getElementById("employeePage").innerHTML=`
+ <div class="card">
+ <h2>💰 Add Amount Taken</h2>
+ <label>Amount (₹)</label><input id="amount" type="number" min="0" step="0.01" placeholder="Enter amount">
+ <label>Payment Method</label>
+ <select id="method" onchange="toggleNote()"><option>Cash</option><option>UPI</option><option>Other</option></select>
+ <div id="noteBox" class="hidden">
+ <label>Other Description / Note</label>
+ <input id="paymentNote" placeholder="Example: Travel expenses">
+ </div>
+ <label>Date</label><input id="payDate" type="date" value="${today()}">
+ <button class="btn orange full" onclick="savePayment()">Save Amount</button>
+ </div>
+ <button class="btn blue full" onclick="openEmployee(${e.id})">← Back</button>`;
+}
+function toggleNote(){
+ const method=document.getElementById("method").value;
+ const box=document.getElementById("noteBox");
+ if(box) box.classList.toggle("hidden",method!=="Other");
+}
+function savePayment(){
+ const e=get(currentId),amount=Number(document.getElementById("amount").value),method=document.getElementById("method").value,date=document.getElementById("payDate").value;
+ const note=method==="Other"?(document.getElementById("paymentNote").value.trim()):"";
+ if(amount<=0||!date){alert("Please enter amount and date.");return}
+ if(method==="Other"&&!note){alert("Please enter a description for Other.");return}
+ e.payments.push({amount,method,date,note});save();openEmployee(e.id);
+}
+function updateEmployee(){
+ const e=get(currentId),salary=Number(document.getElementById("editSalary").value),free=Number(document.getElementById("editFree").value)||0;
+ if(salary<=0){alert("Enter a valid salary.");return}
+ e.salary=salary;e.freeLeave=free;save();openEmployee(e.id);
+}
+function removeEmployee(){
+ const e=get(currentId);
+ if(confirm("Delete "+e.name+" and all records?")){employees=employees.filter(x=>x.id!==e.id);save();showEmployees()}
+}
+render();
+</script>
+<script id="EDGE_SWIPE_BACK">(function(){let sx=0,sy=0,active=false;document.addEventListener("touchstart",e=>{if(e.touches.length===1){sx=e.touches[0].clientX;sy=e.touches[0].clientY;active=sx<45}},{passive:true});document.addEventListener("touchend",e=>{if(!active)return;active=false;const x=e.changedTouches[0].clientX,y=e.changedTouches[0].clientY;if(x-sx>100&&Math.abs(y-sy)<80){if(typeof currentId!=="undefined"&&currentId!==null){showEmployees();currentId=null}else if(!document.getElementById("employees").classList.contains("hidden"))goHome()}},{passive:true});})();
+function backupData(){
+  const payload={app:"Staff Salary Manager",version:1,exportedAt:new Date().toISOString(),storageKey:KEY,data:employees};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob); const a=document.createElement("a");
+  const d=new Date().toISOString().slice(0,10); a.href=url; a.download="Staff-Salary-Backup-"+d+".json";
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  alert("Backup created successfully. Please keep the JSON file safe.");
+}
+function restoreData(input){
+  const file=input.files&&input.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(){
+    try{
+      const payload=JSON.parse(reader.result);
+      const data=Array.isArray(payload)?payload:payload.data;
+      if(!Array.isArray(data)) throw new Error("Invalid backup");
+      const valid=data.every(e=>e&&e.id!=null&&typeof e.name==="string"&&Number.isFinite(Number(e.salary))&&Array.isArray(e.leaves)&&Array.isArray(e.payments));
+      if(!valid) throw new Error("Invalid backup structure");
+      if(!confirm("Restore this backup? Current data will be replaced.")) {input.value="";return;}
+      const safety={app:"Staff Salary Manager",version:1,exportedAt:new Date().toISOString(),storageKey:KEY,data:employees};
+      const blob=new Blob([JSON.stringify(safety,null,2)],{type:"application/json"});
+      const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="Staff-Salary-Auto-Backup-Before-Restore-"+new Date().toISOString().slice(0,10)+".json"; document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+      employees=data;save();currentId=null;render();alert("Data restored successfully. An automatic safety backup was also downloaded.");
+    }catch(err){alert("Restore failed: Invalid backup file.");}
+    input.value="";
+  }; reader.readAsText(file);
+}
+function clearAllData(){
+  if(!employees.length){alert("There is no data to clear.");return;}
+  if(!confirm("Delete ALL employees, leave records and payment records? This cannot be undone unless you have a backup.")) return;
+  if(!confirm("FINAL CONFIRMATION: Clear all Staff Salary Manager data?")) return;
+  backupData(); employees=[];save();currentId=null;render();alert("All data cleared.");
+}
+</script></body>
+</html>
